@@ -159,13 +159,13 @@ const App = () => {
             Machine Learning Engineer & Data Scientist
           </div>
           <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-            Turning Data into <br />
+            Muhammad <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-              Intelligence
+              Hasham Ahmad
             </span>
           </h1>
           <p className={`text-lg mb-8 max-w-lg mx-auto md:mx-0 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-            I build scalable AI solutions, from predictive modeling to large language models. Passionate about solving complex problems with clean code and rigorous math.
+            xGDSC Lead & Computer Science Graduate from KFUEIT. I build scalable AI solutions, from predictive modeling to large language models.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
@@ -178,9 +178,9 @@ const App = () => {
           </div>
 
           <div className="mt-12 flex items-center justify-center md:justify-start space-x-6">
-            <a href="#" className={`transition-colors ${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-black'}`}><Github size={24} /></a>
-            <a href="#" className={`transition-colors ${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-black'}`}><Linkedin size={24} /></a>
-            <a href="#" className={`transition-colors ${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-black'}`}><Mail size={24} /></a>
+            <a href="https://github.com/m-hashamahmad" target="_blank" rel="noopener noreferrer" className={`transition-colors ${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-black'}`}><Github size={24} /></a>
+            <a href="https://www.linkedin.com/in/muhammad-hasham-ahmad/" target="_blank" rel="noopener noreferrer" className={`transition-colors ${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-black'}`}><Linkedin size={24} /></a>
+            <a href="mailto:contact@mhashamahmad.me" className={`transition-colors ${darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-black'}`}><Mail size={24} /></a>
           </div>
         </motion.div>
 
@@ -234,10 +234,10 @@ const App = () => {
             className={`rounded-2xl p-8 ${darkMode ? 'bg-slate-800' : 'bg-white shadow-sm'}`}
           >
             <p className={`text-lg leading-relaxed mb-6 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-              Hi, I'm a Machine Learning Engineer based in [Your Location]. My journey began with a curiosity about how machines learn patterns, which led me to dive deep into neural networks and statistical modeling.
+              Hi, I'm Muhammad Hasham Ahmad, a Computer Science Graduate from Khawaja Fareed University of Engineering & Information Technology (KFUEIT). My journey in tech was shaped significantly by my role as an xGDSC Lead, where I fostered a community of developers and led various technical initiatives.
             </p>
             <p className={`text-lg leading-relaxed ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-              I have experience working with startups and large enterprises, deploying models that handle real-world traffic. When I'm not tuning hyperparameters, you can find me contributing to open-source projects or writing about AI trends on Medium.
+              My fascination with how machines learn patterns led me deep into neural networks and statistical modeling. I specialize in turning complex data into actionable intelligence through robust engineering and iterative research.
             </p>
           </motion.div>
         </div>
@@ -404,8 +404,8 @@ const App = () => {
              </p>
              <div className="flex gap-6">
                <a href="#" className="hover:text-blue-500 transition-colors">Twitter</a>
-               <a href="#" className="hover:text-blue-500 transition-colors">GitHub</a>
-               <a href="#" className="hover:text-blue-500 transition-colors">LinkedIn</a>
+               <a href="https://github.com/m-hashamahmad" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors">GitHub</a>
+               <a href="https://www.linkedin.com/in/muhammad-hasham-ahmad/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors">LinkedIn</a>
              </div>
           </div>
         </div>
