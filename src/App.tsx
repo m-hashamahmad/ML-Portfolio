@@ -18,7 +18,132 @@ import {
   Download,
   Globe
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useMotionValue, useTransform } from 'motion/react';
+
+interface Project {
+  title: string;
+  category: string;
+  description: string;
+  tech: string[];
+  icon: React.ReactNode;
+}
+
+interface ProjectCardProps {
+  project: Project;
+  darkMode: boolean;
+  key?: React.Key;
+}
+
+const ProjectCard = ({ project, darkMode }: ProjectCardProps) => {
+  const x = useMotionValue(0.5);
+  const y = useMotionValue(0.5);
+
+  // 3D Tilt parameters: maps mouse position percentage (0 to 1) to tilt degree (-10 to 10)
+  const rotateX = useTransform(y, [0, 1], [10, -10]);
+  const rotateY = useTransform(x, [0, 1], [-10, 10]);
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+    x.set(mouseX / width);
+    y.set(mouseY / height);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0.5);
+    y.set(0.5);
+  };
+
+  return (
+    <motion.div
+      layout
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      transition={{ duration: 0.3 }}
+      className="perspective-1000"
+    >
+      <motion.div
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          rotateX,
+          rotateY,
+          transformStyle: "preserve-3d",
+        }}
+        whileHover={{
+          scale: 1.04,
+          boxShadow: darkMode 
+            ? "0 25px 50px -12px rgba(59, 130, 246, 0.25)" 
+            : "0 25px 50px -12px rgba(0, 0, 0, 0.15)",
+        }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        className={`group rounded-xl overflow-hidden border transition-colors duration-300 ${
+          darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'
+        }`}
+      >
+        <div 
+          style={{ transform: "translateZ(30px)" }}
+          className={`h-48 flex items-center justify-center transition-colors duration-300 ${
+            darkMode ? 'bg-slate-900' : 'bg-gray-100'
+          }`}
+        >
+          <div className="transition-transform duration-500 group-hover:scale-110">
+            {project.icon}
+          </div>
+        </div>
+        <div className="p-6" style={{ transform: "translateZ(15px)" }}>
+          <div className="flex justify-between items-start mb-2">
+            <div>
+              <span className="text-xs font-semibold text-blue-500 uppercase tracking-wider">
+                {project.category}
+              </span>
+              <h3 className="text-xl font-bold mt-1 group-hover:text-blue-500 transition-colors">
+                {project.title}
+              </h3>
+            </div>
+          </div>
+          <p className={`text-sm mb-4 line-clamp-3 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+            {project.description}
+          </p>
+          <div className="flex flex-wrap gap-2 mb-6">
+            {project.tech.map((t, i) => (
+              <span 
+                key={i} 
+                className={`text-xs px-2 py-1 rounded border ${
+                  darkMode ? 'border-slate-600 text-gray-400' : 'border-gray-200 text-gray-600'
+                }`}
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+          <div className="flex gap-4">
+            <a 
+              href="#" 
+              className={`flex items-center gap-1 text-sm font-medium ${
+                darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-black'
+              }`}
+            >
+              <Github size={16} /> Code
+            </a>
+            <a 
+              href="#" 
+              className={`flex items-center gap-1 text-sm font-medium ${
+                darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-black'
+              }`}
+            >
+              <ExternalLink size={16} /> Demo
+            </a>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(true);
@@ -49,7 +174,7 @@ const App = () => {
     { category: "Visualization", items: ["Matplotlib", "Seaborn", "Plotly", "Power BI", "Tableau"] }
   ];
 
-  const projects = [
+  const projects: Project[] = [
     {
       title: "Heart Disease Prediction",
       category: "Tabular Data",
@@ -297,46 +422,8 @@ const App = () => {
           {/* Project Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <AnimatePresence mode="popLayout">
-              {filteredProjects.map((project, idx) => (
-                <motion.div 
-                  key={project.title}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.3 }}
-                  className={`group rounded-xl overflow-hidden border transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${darkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-gray-200'}`}
-                >
-                  <div className={`h-48 flex items-center justify-center ${darkMode ? 'bg-slate-900' : 'bg-gray-100'}`}>
-                    {project.icon}
-                  </div>
-                  <div className="p-6">
-                    <div className="flex justify-between items-start mb-2">
-                      <div>
-                        <span className="text-xs font-semibold text-blue-500 uppercase tracking-wider">{project.category}</span>
-                        <h3 className="text-xl font-bold mt-1 group-hover:text-blue-500 transition-colors">{project.title}</h3>
-                      </div>
-                    </div>
-                    <p className={`text-sm mb-4 line-clamp-3 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                      {project.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {project.tech.map((t, i) => (
-                        <span key={i} className={`text-xs px-2 py-1 rounded border ${darkMode ? 'border-slate-600 text-gray-400' : 'border-gray-200 text-gray-600'}`}>
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="flex gap-4">
-                      <a href="#" className={`flex items-center gap-1 text-sm font-medium ${darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-black'}`}>
-                        <Github size={16} /> Code
-                      </a>
-                      <a href="#" className={`flex items-center gap-1 text-sm font-medium ${darkMode ? 'text-gray-300 hover:text-white' : 'text-gray-700 hover:text-black'}`}>
-                        <ExternalLink size={16} /> Demo
-                      </a>
-                    </div>
-                  </div>
-                </motion.div>
+              {filteredProjects.map((project) => (
+                <ProjectCard key={project.title} project={project} darkMode={darkMode} />
               ))}
             </AnimatePresence>
           </div>
